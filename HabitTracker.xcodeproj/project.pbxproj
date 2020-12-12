@@ -14,6 +14,8 @@
 		834EC1F1258245E300C37165 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EC1F0258245E300C37165 /* Habit.swift */; };
 		834EC1F425824ADE00C37165 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EC1F325824ADE00C37165 /* AddHabitView.swift */; };
 		834EC1F725828A5400C37165 /* HabitsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EC1F625828A5400C37165 /* HabitsStorage.swift */; };
+		834EC1FA2584F7AF00C37165 /* DisplayHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EC1F92584F7AF00C37165 /* DisplayHabitView.swift */; };
+		834EC1FD2585098100C37165 /* HabitTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EC1FC2585098100C37165 /* HabitTrackerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		834EC1F0258245E300C37165 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		834EC1F325824ADE00C37165 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		834EC1F625828A5400C37165 /* HabitsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStorage.swift; sourceTree = "<group>"; };
+		834EC1F92584F7AF00C37165 /* DisplayHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayHabitView.swift; sourceTree = SOURCE_ROOT; };
+		834EC1FC2585098100C37165 /* HabitTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,8 @@
 		834EC1DF25823C7200C37165 /* HabitTracker */ = {
 			isa = PBXGroup;
 			children = (
+				834EC1F92584F7AF00C37165 /* DisplayHabitView.swift */,
+				834EC1FC2585098100C37165 /* HabitTrackerView.swift */,
 				834EC1E025823C7200C37165 /* HabitTrackerApp.swift */,
 				834EC1E225823C7200C37165 /* ContentView.swift */,
 				834EC1F625828A5400C37165 /* HabitsStorage.swift */,
@@ -149,8 +155,10 @@
 			files = (
 				834EC1F1258245E300C37165 /* Habit.swift in Sources */,
 				834EC1F425824ADE00C37165 /* AddHabitView.swift in Sources */,
+				834EC1FD2585098100C37165 /* HabitTrackerView.swift in Sources */,
 				834EC1E325823C7200C37165 /* ContentView.swift in Sources */,
 				834EC1F725828A5400C37165 /* HabitsStorage.swift in Sources */,
+				834EC1FA2584F7AF00C37165 /* DisplayHabitView.swift in Sources */,
 				834EC1E125823C7200C37165 /* HabitTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,7 +15,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(habits.items) { habit in
-                    NavigationLink(destination: Text("Destination")) {
+                    NavigationLink(destination: DisplayHabitView(id: habit.id, allHabits: self.habits)) {
                         if let iconName = habit.icon {
                             Image(iconName)
                         }
