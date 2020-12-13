@@ -28,5 +28,4 @@ struct Habit: Codable, Identifiable {
     
     var streak: Int = 0
     var habitRecordedDays = [Int]()
-    
 }
