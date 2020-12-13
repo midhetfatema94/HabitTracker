@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DisplayHabitView: View {
+    @State private var showingEditHabit = false
     @ObservedObject var habits = Habits()
     var displayedHabitIndex = 0
     
@@ -29,6 +30,16 @@ struct DisplayHabitView: View {
             .padding()
         }
         .navigationTitle(Text(habits.items[displayedHabitIndex].title))
+        .navigationBarItems(trailing:
+            Button(action: {
+                self.showingEditHabit = true
+            }, label: {
+                Text("Edit")
+            })
+            .sheet(isPresented: $showingEditHabit, content: {
+                EditHabitView(index: displayedHabitIndex, allHabits: habits)
+            })
+        )
     }
     
     init(id: UUID, allHabits: Habits) {

@@ -14,38 +14,63 @@ struct AddHabitView: View {
     @State private var habitDayCount = ""
     @State private var habitDayCountIndex = 2
     @State private var habitDayCountArray = ["30", "100", "365", "Other"]
-    @State private var navTitle = ""
+    @State private var habitImageName: String?
+    
     @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var habits = Habits()
+    
+    let allImageNames = ["bio", "breakfast", "dumbbell", "exercise", "heart_health", "meditation", "no_smoking", "no_sugar", "park", "pills", "sleep", "sleep2", "sunrise", "toothbrush", "water"]
+    
     
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    Text("Habit Title")
-                    TextField("Hydration", text: $habitTitle)
-                }
-                
-                Section {
-                    Text("Habit Description")
-                    TextField("To drink 1l of water everyday", text: $habitDescription)
-                }
-                
-                Section {
-                    Text("Track habit for:")
-                    Picker("Track habit for:", selection: $habitDayCountIndex, content: {
-                        ForEach(0 ..< habitDayCountArray.count) {
-                            Text(habitDayCountArray[$0])
+            GeometryReader {geometry in
+                Form {
+                    Section(header: "Habit Title") {
+                        TextField("Hydration", text: $habitTitle)
+                    }
+                    
+                    Section(header: "Habit Description") {
+                        TextField("To drink 1l of water everyday", text: $habitDescription)
+                    }
+                    
+                    Section(header: "Track habit for:") {
+                        Picker("Track habit for:", selection: $habitDayCountIndex, content: {
+                            ForEach(0 ..< habitDayCountArray.count) {
+                                Text(habitDayCountArray[$0])
+                            }
+                        }).pickerStyle(SegmentedPickerStyle())
+                        TextField("Enter number of days", text: $habitDayCount)
+                            .hidden(habitDayCountIndex != habitDayCountArray.count - 1)
+                    }
+                    
+                    Section(header: "Select an icon *optional* :") {
+                        VStack {
+                            ForEach(0 ..< 3) {rowIndex in
+                                HStack {
+                                    ForEach(0 ..< 5) {colIndex in
+                                        let currentIndex = (rowIndex * 5) + colIndex
+                                        Button(action: {
+                                            //Add button action
+                                            self.habitImageName = allImageNames[currentIndex]
+                                        }, label: {
+                                            Image(allImageNames[currentIndex])
+                                                .resizable()
+                                        })
+                                        .frame(width: geometry.size.width/8, height: geometry.size.width/8)
+                                        .padding(3)
+                                    }
+                                }
+                            }
                         }
-                    }).pickerStyle(SegmentedPickerStyle())
-                    TextField("Enter number of days", text: $habitDayCount)
-                        .hidden(habitDayCountIndex != habitDayCountArray.count - 1)
-                }
-                
-                HStack {
-                    Spacer()
-                    Button(action: self.saveHabit) { Text("Add Habit") }
-                    Spacer()
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: self.saveHabit) { Text("Add Habit") }
+                        Spacer()
+                    }
                 }
             }
             .navigationTitle("Add New Habit")
@@ -65,7 +90,7 @@ struct AddHabitView: View {
         }
         if self.validateHabit() {
             if let actualDayCount = Int(self.habitDayCount) {
-                let newItem = Habit(title: self.habitTitle, description: self.habitDescription, habitDays: actualDayCount, icon: nil)
+                let newItem = Habit(title: self.habitTitle, description: self.habitDescription, habitDays: actualDayCount, icon: self.habitImageName)
                 self.habits.items.append(newItem)
                 self.presentationMode.wrappedValue.dismiss()
             }
