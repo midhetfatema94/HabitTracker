@@ -26,16 +26,17 @@ struct AddHabitView: View {
     var body: some View {
         NavigationView {
             GeometryReader {geometry in
+                let imageDimensions = geometry.size.width/8
                 Form {
-                    Section(header: "Habit Title") {
+                    Section(header: Text("Habit Title")) {
                         TextField("Hydration", text: $habitTitle)
                     }
                     
-                    Section(header: "Habit Description") {
+                    Section(header: Text("Habit Description")) {
                         TextField("To drink 1l of water everyday", text: $habitDescription)
                     }
                     
-                    Section(header: "Track habit for:") {
+                    Section(header: Text("Track habit for:")) {
                         Picker("Track habit for:", selection: $habitDayCountIndex, content: {
                             ForEach(0 ..< habitDayCountArray.count) {
                                 Text(habitDayCountArray[$0])
@@ -45,20 +46,19 @@ struct AddHabitView: View {
                             .hidden(habitDayCountIndex != habitDayCountArray.count - 1)
                     }
                     
-                    Section(header: "Select an icon *optional* :") {
+                    Section(header: Text("Select an icon (optional) :")) {
                         VStack {
                             ForEach(0 ..< 3) {rowIndex in
                                 HStack {
                                     ForEach(0 ..< 5) {colIndex in
                                         let currentIndex = (rowIndex * 5) + colIndex
-                                        Button(action: {
-                                            //Add button action
+                                        Image(allImageNames[currentIndex])
+                                        .resizable()
+                                        .onTapGesture {
+                                            print("image tapped: ", currentIndex)
                                             self.habitImageName = allImageNames[currentIndex]
-                                        }, label: {
-                                            Image(allImageNames[currentIndex])
-                                                .resizable()
-                                        })
-                                        .frame(width: geometry.size.width/8, height: geometry.size.width/8)
+                                        }
+                                        .frame(width: imageDimensions, height: imageDimensions)
                                         .padding(3)
                                     }
                                 }
@@ -74,6 +74,13 @@ struct AddHabitView: View {
                 }
             }
             .navigationTitle("Add New Habit")
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Cancel")
+                })
+            )
             .alert(isPresented: $showValidationAlert) {
                 Alert(title: Text("Validation Error"),
                       message: Text("Please enter the data correctly"),
