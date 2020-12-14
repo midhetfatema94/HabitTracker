@@ -18,6 +18,8 @@ struct ContentView: View {
                     NavigationLink(destination: DisplayHabitView(id: habit.id, allHabits: self.habits)) {
                         if let iconName = habit.icon {
                             Image(iconName)
+                                .resizable()
+                                .frame(width: 30, height: 30)
                         }
                         
                         Text(habit.title)
@@ -25,7 +27,12 @@ struct ContentView: View {
                         Spacer()
                         
                         if habit.streak > 0 {
-                            Text("\(habit.streak)")
+                            HStack(alignment: .center) {
+                                Image("fire")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                                Text("\(habit.streak)")
+                            }
                         }
                     }
                 }

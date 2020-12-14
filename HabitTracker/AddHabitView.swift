@@ -60,6 +60,8 @@ struct AddHabitView: View {
                                         }
                                         .frame(width: imageDimensions, height: imageDimensions)
                                         .padding(3)
+                                        .background(self.habitImageName == allImageNames[currentIndex] ? Color.gray : Color.white)
+                                        .clipShape(Circle())
                                     }
                                 }
                             }

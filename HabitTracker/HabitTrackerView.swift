@@ -28,6 +28,7 @@ struct HabitTrackerView: View {
                                     } else {
                                         self.habits.items[displayedHabitIndex].habitRecordedDays.append(currentDay)
                                     }
+                                    self.calculateStreak(recordedDays: self.habits.items[displayedHabitIndex].habitRecordedDays)
                                 }
                             }, label: {
                                 Text("\(currentDay)")
@@ -70,6 +71,22 @@ struct HabitTrackerView: View {
         } else {
             return .red
         }
+    }
+    
+    func calculateStreak(recordedDays: [Int]) {
+        var daysRecorded = recordedDays
+        var streakCount = 0
+        for (i, eachDay) in daysRecorded.enumerated() {
+            //Checking whether a day before or day after is recorded because user can record days in a random order
+            if daysRecorded.contains(eachDay + 1) || daysRecorded.contains(eachDay - 1) {
+                streakCount += 1
+                //Removing days after recording so that it doesnot go into a repetitive loop
+                daysRecorded.remove(at: i)
+            } else {
+                break
+            }
+        }
+        habits.items[displayedHabitIndex].streak = streakCount > 0 ? streakCount + 1 : 0
     }
 }
 

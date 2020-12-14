@@ -15,9 +15,11 @@ struct DisplayHabitView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                HStack {
+                HStack(alignment: .center) {
                     if let displayIcon = habits.items[displayedHabitIndex].icon {
                         Image(displayIcon)
+                            .resizable()
+                            .frame(width: 40, height: 40)
                     }
                     Text(habits.items[displayedHabitIndex].description)
                         .foregroundColor(.gray)
@@ -30,16 +32,6 @@ struct DisplayHabitView: View {
             .padding()
         }
         .navigationTitle(Text(habits.items[displayedHabitIndex].title))
-        .navigationBarItems(trailing:
-            Button(action: {
-                self.showingEditHabit = true
-            }, label: {
-                Text("Edit")
-            })
-            .sheet(isPresented: $showingEditHabit, content: {
-                EditHabitView(index: displayedHabitIndex, allHabits: habits)
-            })
-        )
     }
     
     init(id: UUID, allHabits: Habits) {
