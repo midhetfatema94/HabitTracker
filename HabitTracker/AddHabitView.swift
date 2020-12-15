@@ -99,7 +99,7 @@ struct AddHabitView: View {
         }
         if self.validateHabit() {
             if let actualDayCount = Int(self.habitDayCount) {
-                let newItem = Habit(title: self.habitTitle, description: self.habitDescription, habitDays: actualDayCount, icon: self.habitImageName)
+                let newItem = Habit(title: self.habitTitle, description: self.habitDescription, habitDays: actualDayCount, icon: self.habitImageName, streak: 0)
                 self.habits.items.append(newItem)
                 self.presentationMode.wrappedValue.dismiss()
             }

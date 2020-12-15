@@ -18,7 +18,6 @@ struct Habit: Codable, Identifiable {
     var daysSpent: Int {
         let calendar = Calendar.current
 
-        // Replace the hour (time) of both dates with 00:00
         let date1 = calendar.startOfDay(for: dateAdded)
         let date2 = calendar.startOfDay(for: Date())
 
@@ -26,6 +25,6 @@ struct Habit: Codable, Identifiable {
         return (components.day ?? 0) + 1
     }
     
-    var streak: Int = 0
+    var streak: Int
     var habitRecordedDays = [Int]()
 }

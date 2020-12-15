@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct HabitTrackerView: View {
+    @State private var showingStreakAwardAlert = false
+    @State private var awardMessage = ""
     @ObservedObject var habits = Habits()
-    var displayedHabitIndex = 0
+    
+    let awardCountArray = [5, 10, 21, 30, 60, 100, 365]
     
     var rows: Int = 0
+    var displayedHabitIndex = 0
     
     var body: some View {
         GeometryReader { geometry in
+            let imageDimesions = geometry.size.width/10
+            
             VStack {
                 ForEach(0 ..< rows) {rowIndex in
                     HStack {
@@ -28,22 +34,26 @@ struct HabitTrackerView: View {
                                     } else {
                                         self.habits.items[displayedHabitIndex].habitRecordedDays.append(currentDay)
                                     }
-                                    self.calculateStreak(recordedDays: self.habits.items[displayedHabitIndex].habitRecordedDays)
+                                    self.calculateStreak(recordedDays: habits.items[displayedHabitIndex].habitRecordedDays)
                                 }
                             }, label: {
                                 Text("\(currentDay)")
                                     .fontWeight(.bold)
                             })
-                            .frame(width: geometry.size.width/10, height: geometry.size.width/10)
-                            .foregroundColor(getButtonForegroundColor(currentDay: currentDay))
-                            .background(getButtonBackgroundColor(currentDay: currentDay))
-                            .clipShape(Circle())
-                            .padding(1)
-                            .hidden(currentDay > habits.items[displayedHabitIndex].habitDays)
+                            .frame(width: imageDimesions, height: imageDimesions)
+                            .modifier(HabitTrackerButton(currentDay: currentDay,
+                                                         currentHabit: habits.items[displayedHabitIndex]))
                         }
                     }
                 }
                 Spacer()
+            }
+            .alert(isPresented: $showingStreakAwardAlert) {
+                Alert(title: Text("Congratulations!"),
+                      message: Text(awardMessage),
+                      dismissButton: .default(Text("Yay! :)")) {
+                        self.showingStreakAwardAlert = false
+                })
             }
         }
     }
@@ -52,46 +62,70 @@ struct HabitTrackerView: View {
         self.habits = allHabits
         self.displayedHabitIndex = index
         rows = Int(ceil(Double(self.habits.items[displayedHabitIndex].habitDays)/8))
-        print("no of rows: ", rows)
-    }
-    
-    func getButtonBackgroundColor(currentDay: Int) -> Color {
-        if habits.items[displayedHabitIndex].habitRecordedDays.contains(currentDay) {
-            return .green
-        } else {
-            return .white
-        }
-    }
-    
-    func getButtonForegroundColor(currentDay: Int) -> Color {
-        if habits.items[displayedHabitIndex].habitRecordedDays.contains(currentDay) {
-            return .white
-        } else if currentDay > habits.items[displayedHabitIndex].daysSpent {
-            return .blue
-        } else {
-            return .red
-        }
     }
     
     func calculateStreak(recordedDays: [Int]) {
-        var daysRecorded = recordedDays
+        //array has been ordered after input
+        let daysRecorded = recordedDays.sorted { $0 < $1 }
         var streakCount = 0
-        for (i, eachDay) in daysRecorded.enumerated() {
-            //Checking whether a day before or day after is recorded because user can record days in a random order
-            if daysRecorded.contains(eachDay + 1) || daysRecorded.contains(eachDay - 1) {
+        for eachDay in daysRecorded {
+            //Checking whether this day is the last day to break out of the loop
+            if eachDay == daysRecorded.last { break }
+            
+            //From an ordered array, you should have a streak in the end to be calculated as a streak.
+            if daysRecorded.contains(eachDay + 1) {
                 streakCount += 1
-                //Removing days after recording so that it doesnot go into a repetitive loop
-                daysRecorded.remove(at: i)
             } else {
-                break
+                streakCount = 0
             }
         }
         habits.items[displayedHabitIndex].streak = streakCount > 0 ? streakCount + 1 : 0
+        
+        if awardCountArray.contains(streakCount + 1) {
+            awardMessage = "You have completed \(streakCount + 1) days! You've got this!"
+            showingStreakAwardAlert = true
+        } else if streakCount + 1 == habits.items[displayedHabitIndex].habitDays {
+            awardMessage = "You have completed all your recorded days! You've nailed this! Kudos to you!"
+            showingStreakAwardAlert = true
+        }
     }
 }
 
 struct HabitTrackerView_Previews: PreviewProvider {
     static var previews: some View {
         HabitTrackerView(index: 0, allHabits: Habits())
+    }
+}
+
+struct HabitTrackerButton: ViewModifier {
+    
+    var currentDay: Int
+    var currentHabit: Habit
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(getButtonForegroundColor())
+            .background(getButtonBackgroundColor())
+            .clipShape(Circle())
+            .padding(1)
+            .hidden(currentDay > currentHabit.habitDays)
+    }
+    
+    func getButtonBackgroundColor() -> Color {
+        if currentHabit.habitRecordedDays.contains(currentDay) {
+            return .green
+        } else {
+            return .white
+        }
+    }
+    
+    func getButtonForegroundColor() -> Color {
+        if currentHabit.habitRecordedDays.contains(currentDay) {
+            return .white
+        } else if currentDay > currentHabit.daysSpent {
+            return .blue
+        } else {
+            return .red
+        }
     }
 }

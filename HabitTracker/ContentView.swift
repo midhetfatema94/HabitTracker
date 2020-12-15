@@ -23,6 +23,7 @@ struct ContentView: View {
                         }
                         
                         Text(habit.title)
+                            .fontWeight(.semibold)
                         
                         Spacer()
                         
