@@ -10,7 +10,9 @@ Features are:
 * Each habit can have a title, description and customisation options for number of days to track and icons.
 * Displays of Awards on achieving a streak 
 
-**TODO**
+
+
+--TODO--
 * Adding screenshot of the app
 * Customise the date you want to start habit on
 * Animations
