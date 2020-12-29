@@ -12,19 +12,9 @@ This project is an application to track your habits and guide you towards a heal
 
 ### Screenshots
 
-![Home View](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.39.33.png)
+![Screenshots Set One](https://github.com/midhetfatema94/HabitTracker/blob/main/screenshot1.png)
 
-![Five day streak](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.39.50.png)
-
-![Ten day streak](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.40.20.png)
-
-![Habit Tracking View](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.40.49.png)
-
-![Habit Tracking View Two](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.41.08.png)
-
-![Home View with streaks](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.41.33.png)
-
-![Add New Habit View](https://github.com/midhetfatema94/HabitTracker/blob/main/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202020-12-29%20at%2013.41.39.png)
+![Screenshots Set Two](https://github.com/midhetfatema94/HabitTracker/blob/main/screenshot2.png)
 
 #### --TODO--
 * Customise the date you want to start habit on
